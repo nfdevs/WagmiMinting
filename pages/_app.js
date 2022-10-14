@@ -1,11 +1,20 @@
 import "../styles/globals.css";
-import { WagmiConfig, createClient } from "wagmi";
-import { getDefaultProvider } from "ethers";
+import {
+  createClient,
+  configureChains,
+  defaultChains,
+  WagmiConfig,
+} from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
 import { UserProvider } from "../context/context";
 
+const { provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+]);
+
 const client = createClient({
-  autoConnect: true,
-  provider: getDefaultProvider(),
+  provider,
+  webSocketProvider,
 });
 
 function MyApp({ Component, pageProps }) {

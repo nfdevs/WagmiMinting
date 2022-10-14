@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useContract, useSigner } from "wagmi";
 import { ethers } from "ethers";
 import contractAbi from "../public/config/ABI.json";
-import { usePrepareContractWrite, useContractWrite } from "wagmi";
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 import { goerli } from "wagmi/chains";
 
 const MintingWidget = ({
@@ -12,22 +16,44 @@ const MintingWidget = ({
   donationAmount,
   isMinting,
   setDonationAmount,
+  setMintingStatus,
 }) => {
   const { address } = useAccount();
+  const [status, setStatus] = useState();
   const [_mintAmount, _setMintAmount] = useState(1);
 
   useEffect(() => {
     _setMintAmount(mintAmount);
   }, [mintAmount]);
 
-  const { config, error } = usePrepareContractWrite({
+  const { config } = usePrepareContractWrite({
     address: "0xFac9E5A154E58c3f2C321ba52166e36968f0670F",
     abi: contractAbi,
     functionName: "mint",
     args: [_mintAmount],
     chainId: goerli.id,
+    overrides: {
+      from: address,
+      value: ethers.utils.parseEther(String(donationAmount)),
+    },
   });
-  const { write } = useContractWrite(config);
+  console.log(config);
+  const {
+    data: mintData,
+    write: mint,
+    isLoading: isMintLoading,
+    isSuccess: isMintStarted,
+    error: mintError,
+  } = useContractWrite(config);
+  const {
+    data: txData,
+    isSuccess: txSuccess,
+    error: txError,
+  } = useWaitForTransaction({
+    hash: mintData?.hash,
+  });
+
+  const isMinted = txSuccess;
 
   return (
     <div className="flex flex-col">
@@ -37,10 +63,15 @@ const MintingWidget = ({
           className="relative block overflow-hidden rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
         >
           <input
-            type="ethAmount"
-            id="UserEmail"
+            type="number"
+            id="ethAmount"
             placeholder="0.0"
-            onChange={(e) => setDonationAmount(e.target.value)}
+            defaultValue={donationAmount}
+            onChange={(e) => {
+              e.target.value === null
+                ? setDonationAmount(0.0)
+                : setDonationAmount(e.target.value);
+            }}
             className="peer h-8 border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0  text-lg "
           />
 
@@ -99,20 +130,46 @@ const MintingWidget = ({
 
       <button
         className="mt-6 py-2 px-4 text-center text-white uppercase bg-zinc-500 border-b-4 border-zinc-700 rounded hover:bg-zinc-400 hover:border-zinc-500"
-        disabled={!write}
         onClick={() => {
-          write?.();
-          isMinting(true);
+          // mintSomeNfts();
+          mint?.();
+          setMintingStatus(true);
         }}
+        disabled={!mint || isMintLoading || isMintStarted}
+        data-mint-loading={isMintLoading}
+        data-mint-started={isMintStarted}
       >
-        {isMinting ? "Minting..." : "Mint"}
+        {isMintLoading && "Waiting for approval"}
+        {isMintStarted && !isMinted && "Minting..."}
+        {!isMintLoading && !isMintStarted && "Mint"}
+        {isMinted && "Mint"}
       </button>
-      {error && (
-        <div>
-          <span className="text-black">
-            An error occurred preparing the transaction {error.message}
-          </span>
-        </div>
+      {mintError && (
+        <p className="text-zinc-900 text-sm text-center font-Ralway my-5">
+          Unexpected error occured.
+        </p>
+      )}
+      {txError && (
+        <p className="text-zinc-900 text-sm text-center font-Ralway my-5">
+          Unexpected transaction error occured.
+        </p>
+      )}
+      {isMinted && (
+        <a href={`https://goerli.etherscan.io/tx/${mintData?.hash}`}>
+          <p className="my-3 text-sm border border-zinc-900 p-2 rounded-lg text-green-800 font-Ralway items-center flex text-center">
+            <span className="text-green-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                class="w-5 h-5 mr-2"
+                viewBox="0 0 16 16"
+              >
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
+              </svg>
+            </span>
+            Click to view on your transaction on Etherscan
+          </p>
+        </a>
       )}
     </div>
   );

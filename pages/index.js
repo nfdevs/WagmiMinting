@@ -11,7 +11,7 @@ export default function Home() {
   const [mintAmount, setMintAmount] = useState(1);
   const [mintingStatus, setMintingStatus] = useState(false);
   const [maxMintAmount, setMaxMintAmount] = useState(2);
-  const [donationAmount, setDonationAmount] = useState();
+  const [donationAmount, setDonationAmount] = useState(0.0);
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
@@ -60,15 +60,13 @@ export default function Home() {
 
                 <div className="p-8 sm:p-16 lg:p-24">
                   <h2 className="text-2xl font-Roboto sm:text-3xl">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Tempore, debitis.
+                    Pakistan & Puerto Rico Charity Collective
                   </h2>
 
                   <p className="mt-4 font-Raleway text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Aliquid, molestiae! Quidem est esse numquam odio deleniti,
-                    beatae, magni dolores provident quaerat totam eos, aperiam
-                    architecto eius quis quibusdam fugiat dicta.
+                    9 artists coming together to raise awareness and funds
+                    through art about the devastation caused by flooding in
+                    Pakistan and Puerto Rico
                   </p>
 
                   {status ? (
@@ -80,6 +78,7 @@ export default function Home() {
                       isMinting={mintingStatus}
                       mintFunction={mintFunction}
                       setDonationAmount={setDonationAmount}
+                      setMintingStatus={setMintingStatus}
                     />
                   ) : (
                     <div className="flex my-5">

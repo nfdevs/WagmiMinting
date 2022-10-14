@@ -43,7 +43,7 @@ const OurArtist = () => {
           {data.map((item, index) => (
             <div className="w-full max-w-xs text-center" key={index}>
               <img
-                className="object-cover object-center w-48 h-48 mx-auto rounded-lg"
+                className="object-cover object-center w-48 h-48 mx-auto"
                 src={item.image}
                 alt={item.name}
               />
@@ -55,6 +55,22 @@ const OurArtist = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="mt-4 flex justify-center flex-col">
+          <div className="mt-2 items-center justify-center flex flex-col">
+            <video className="w-48 h-48">
+              <source
+                controls
+                src="./RazDoesArt-ManagingTides.mp4"
+                type="video/mp4"
+              />
+              Sorry, your browser doesn't support videos.
+            </video>
+
+            <h3 className="text-lg font-Roboto mt-2 text-gray-700 dark:text-gray-200">
+              RazDoesArt
+            </h3>
+          </div>
         </div>
       </div>
     </section>
