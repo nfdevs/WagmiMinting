@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
+import contractAbi from "../public/config/ABI.json";
 import { usePrepareContractWrite, useContractWrite } from "wagmi";
+import { goerli } from "wagmi/chains";
 
 const MintingWidget = ({
   incrementMintAmount,
@@ -19,18 +21,11 @@ const MintingWidget = ({
   }, [mintAmount]);
 
   const { config, error } = usePrepareContractWrite({
-    adddress: "0xFac9E5A154E58c3f2C321ba52166e36968f0670F",
-    abi: {
-      inputs: [
-        { internalType: "uint256", name: "_mintAmount", type: "uint256" },
-      ],
-      name: "mint",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
+    address: "0xFac9E5A154E58c3f2C321ba52166e36968f0670F",
+    abi: contractAbi,
     functionName: "mint",
     args: [_mintAmount],
+    chainId: goerli.id,
   });
   const { write } = useContractWrite(config);
 
