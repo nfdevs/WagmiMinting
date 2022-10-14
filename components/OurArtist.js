@@ -64,7 +64,7 @@ const OurArtist = () => {
                 src="./RazDoesArt-ManagingTides.mp4"
                 type="video/mp4"
               />
-              Sorry, your browser doesn't support videos.
+              Sorry, your browser doesnt support videos.
             </video>
 
             <h3 className="text-lg font-Roboto mt-2 text-gray-700 dark:text-gray-200">
