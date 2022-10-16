@@ -24,7 +24,7 @@ const MintingWidget = ({
   }, [mintAmount]);
 
   const { config } = usePrepareContractWrite({
-    address: "0xd41b1a1C2EF1239966D9F5De6a3ab0C8418fE94D",
+    address: "0x91e2BE7e4801f6dA9c2990A170B6C0c875E61201",
     abi: contractAbi,
     functionName: "mint",
     args: [_mintAmount],
