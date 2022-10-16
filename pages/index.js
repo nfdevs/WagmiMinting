@@ -90,7 +90,7 @@ export default function Home() {
                   {status && mintStatus === true ? (
                     <div className="flex my-5">
                       <span className="font-Roboto text-2xl text-center text-zinc-900">
-                        Minting hasn't started yet!
+                        Minting hasnt started yet!
                       </span>
                     </div>
                   ) : null}
