@@ -10,7 +10,7 @@ import contractAbi from "../public/config/ABI.json";
 export default function Home() {
   const { isConnected } = useContext(UserContext);
   const [mintAmount, setMintAmount] = useState(1);
-  const [maxMintAmount] = useState(2);
+  const [maxMintAmount] = useState(9);
   const [donationAmount, setDonationAmount] = useState(0.0);
   const [status, setStatus] = useState(false);
   const [mintStatus, setMintStatus] = React.useState(true);
