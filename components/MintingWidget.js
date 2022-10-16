@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useAccount, useContract, useSigner } from "wagmi";
+import React, { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 import contractAbi from "../public/config/ABI.json";
 import {
@@ -7,19 +7,16 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { goerli } from "wagmi/chains";
 
 const MintingWidget = ({
   incrementMintAmount,
   mintAmount,
   decrementMintAmount,
   donationAmount,
-  isMinting,
+
   setDonationAmount,
-  setMintingStatus,
 }) => {
   const { address } = useAccount();
-  const [status, setStatus] = useState();
   const [_mintAmount, _setMintAmount] = useState(1);
 
   useEffect(() => {
@@ -127,11 +124,7 @@ const MintingWidget = ({
 
       <button
         className="mt-6 py-2 px-4 text-center text-white uppercase bg-zinc-500 border-b-4 border-zinc-700 rounded hover:bg-zinc-400 hover:border-zinc-500"
-        onClick={() => {
-          // mintSomeNfts();
-          mint?.();
-          setMintingStatus(true);
-        }}
+        onClick={() => mint?.()}
         disabled={!mint || isMintLoading || isMintStarted}
         data-mint-loading={isMintLoading}
         data-mint-started={isMintStarted}

@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React, { useState, useEffect, useContext } from "react";
-import Collection from "../components/Collection";
 import Layout from "../components/Layout";
 import MintingWidget from "../components/MintingWidget";
 import OurArtist from "../components/OurArtist";
@@ -9,8 +8,7 @@ import { UserContext } from "../context/context";
 export default function Home() {
   const { isConnected } = useContext(UserContext);
   const [mintAmount, setMintAmount] = useState(1);
-  const [mintingStatus, setMintingStatus] = useState(false);
-  const [maxMintAmount, setMaxMintAmount] = useState(2);
+  const [maxMintAmount] = useState(2);
   const [donationAmount, setDonationAmount] = useState(0.0);
   const [status, setStatus] = useState(false);
 
@@ -32,12 +30,6 @@ export default function Home() {
       newMintAmount = maxMintAmount;
     }
     setMintAmount(newMintAmount);
-  };
-
-  const mintFunction = async () => {
-    setMintingStatus(true);
-
-    setMintingStatus(false);
   };
 
   return (
@@ -66,7 +58,7 @@ export default function Home() {
                   <p className="mt-4 font-Raleway text-gray-600">
                     9 artists coming together to raise awareness and funds
                     through art about the devastation caused by flooding in
-                    Pakistan and Puerto Rico
+                    Pakistan and Puerto Rico.
                   </p>
 
                   {status ? (
@@ -75,10 +67,7 @@ export default function Home() {
                       mintAmount={mintAmount}
                       decrementMintAmount={decrementMintAmount}
                       donationAmount={donationAmount}
-                      isMinting={mintingStatus}
-                      mintFunction={mintFunction}
                       setDonationAmount={setDonationAmount}
-                      setMintingStatus={setMintingStatus}
                     />
                   ) : (
                     <div className="flex my-5">
