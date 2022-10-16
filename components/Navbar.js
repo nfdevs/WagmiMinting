@@ -15,14 +15,14 @@ const Navbar = () => {
         <Link href="/">
           <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             <span className="ml-3 font-Roboto text-3xl text-zinc-100">
-              Pakistan / Puerto Rico Charity
+              Pakistan & Puerto Rico Charity Collective
             </span>
           </a>
         </Link>
 
-        <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
           <Link href="/about">
-            <a class="mr-5 font-Raleway hover:text-yello-900">About</a>
+            <a className="mr-5 font-Raleway hover:text-yellow-300">About</a>
           </Link>
         </nav>
 

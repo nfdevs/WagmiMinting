@@ -31,13 +31,12 @@ const MintingWidget = ({
     abi: contractAbi,
     functionName: "mint",
     args: [_mintAmount],
-    chainId: goerli.id,
     overrides: {
       from: address,
       value: ethers.utils.parseEther(String(donationAmount)),
     },
   });
-  console.log(config);
+
   const {
     data: mintData,
     write: mint,
@@ -66,12 +65,7 @@ const MintingWidget = ({
             type="number"
             id="ethAmount"
             placeholder="0.0"
-            defaultValue={donationAmount}
-            onChange={(e) => {
-              e.target.value === null
-                ? setDonationAmount(0.0)
-                : setDonationAmount(e.target.value);
-            }}
+            onChange={(e) => setDonationAmount(e.target.value || 0)}
             className="peer h-8 border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0  text-lg "
           />
 
@@ -127,6 +121,9 @@ const MintingWidget = ({
         {donationAmount} ETH{" "}
         <span className="text-sm text-zinc-500"> + GAS</span>
       </h4>
+      <span className="text-md text-center my-2 text-zinc-900 font-Roboto">
+        Max Mint Amount Per Transaction is 2.
+      </span>
 
       <button
         className="mt-6 py-2 px-4 text-center text-white uppercase bg-zinc-500 border-b-4 border-zinc-700 rounded hover:bg-zinc-400 hover:border-zinc-500"
@@ -144,6 +141,7 @@ const MintingWidget = ({
         {!isMintLoading && !isMintStarted && "Mint"}
         {isMinted && "Mint"}
       </button>
+
       {mintError && (
         <p className="text-zinc-900 text-sm text-center font-Ralway my-5">
           Unexpected error occured.

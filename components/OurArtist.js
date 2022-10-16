@@ -33,13 +33,17 @@ const data = [
     image: "/Nasscart-Persevere.JPEG",
     name: "Nasscart",
   },
+  {
+    image: "/Raz.gif",
+    name: "RazDoesArt",
+  },
 ];
 
 const OurArtist = () => {
   return (
     <section className="">
       <div className="p-5">
-        <div className="grid gap-4 mt-2 grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 mt-2 grid-cols-3 xl:grid-cols-3">
           {data.map((item, index) => (
             <div className="w-full max-w-xs text-center" key={index}>
               <img
@@ -55,22 +59,6 @@ const OurArtist = () => {
               </div>
             </div>
           ))}
-        </div>
-        <div className="mt-4 flex justify-center flex-col">
-          <div className="mt-2 items-center justify-center flex flex-col">
-            <video className="w-48 h-48">
-              <source
-                controls
-                src="./RazDoesArt-ManagingTides.mp4"
-                type="video/mp4"
-              />
-              Sorry, your browser doesnt support videos.
-            </video>
-
-            <h3 className="text-lg font-Roboto mt-2 text-gray-700 dark:text-gray-200">
-              RazDoesArt
-            </h3>
-          </div>
         </div>
       </div>
     </section>
