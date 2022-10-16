@@ -4,6 +4,8 @@ import Layout from "../components/Layout";
 import MintingWidget from "../components/MintingWidget";
 import OurArtist from "../components/OurArtist";
 import { UserContext } from "../context/context";
+import { useContractRead } from "wagmi";
+import contractAbi from "../public/config/ABI.json";
 
 export default function Home() {
   const { isConnected } = useContext(UserContext);
@@ -11,6 +13,7 @@ export default function Home() {
   const [maxMintAmount] = useState(2);
   const [donationAmount, setDonationAmount] = useState(0.0);
   const [status, setStatus] = useState(false);
+  const [mintStatus, setMintStatus] = React.useState(true);
 
   useEffect(() => {
     setStatus(isConnected);
@@ -31,6 +34,19 @@ export default function Home() {
     }
     setMintAmount(newMintAmount);
   };
+
+  const { data: pausedData } = useContractRead({
+    address: "0xD0fD4E578bB61c9dcbbc567D046DD0AAc4867557",
+    abi: contractAbi,
+    functionName: "paused",
+    watch: true,
+  });
+
+  React.useEffect(() => {
+    if (pausedData) {
+      setMintStatus(pausedData);
+    }
+  }, [pausedData]);
 
   return (
     <Layout>
@@ -61,7 +77,7 @@ export default function Home() {
                     Pakistan and Puerto Rico.
                   </p>
 
-                  {status ? (
+                  {status && mintStatus !== true ? (
                     <MintingWidget
                       incrementMintAmount={incrementMintAmount}
                       mintAmount={mintAmount}
@@ -69,13 +85,22 @@ export default function Home() {
                       donationAmount={donationAmount}
                       setDonationAmount={setDonationAmount}
                     />
-                  ) : (
+                  ) : null}
+
+                  {status && mintStatus === true ? (
                     <div className="flex my-5">
                       <span className="font-Roboto text-2xl text-center text-zinc-900">
-                        You must connect your wallet to mint.
+                        Minting hasn't started yet!
                       </span>
                     </div>
-                  )}
+                  ) : null}
+                  {!status ? (
+                    <div className="flex my-5">
+                      <span className="font-Roboto text-2xl text-center text-zinc-900">
+                        Please connect your wallet!
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>

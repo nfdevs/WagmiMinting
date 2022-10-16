@@ -6,6 +6,7 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
+  useContractRead,
 } from "wagmi";
 
 const MintingWidget = ({
@@ -24,7 +25,7 @@ const MintingWidget = ({
   }, [mintAmount]);
 
   const { config } = usePrepareContractWrite({
-    address: "0x91e2BE7e4801f6dA9c2990A170B6C0c875E61201",
+    address: "0xD0fD4E578bB61c9dcbbc567D046DD0AAc4867557",
     abi: contractAbi,
     functionName: "mint",
     args: [_mintAmount],
