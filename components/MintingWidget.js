@@ -6,7 +6,6 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
-  useContractRead,
 } from "wagmi";
 
 const MintingWidget = ({
@@ -147,7 +146,7 @@ const MintingWidget = ({
         </p>
       )}
       {isMinted && (
-        <a href={`https://goerli.etherscan.io/tx/${mintData?.hash}`}>
+        <a href={`https://etherscan.io/tx/${mintData?.hash}`}>
           <p className="my-3 text-sm border border-zinc-900 p-2 rounded-lg text-green-800 font-Ralway items-center flex text-center">
             <span className="text-green-600">
               <svg
