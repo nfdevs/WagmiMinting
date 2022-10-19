@@ -13,7 +13,6 @@ const MintingWidget = ({
   mintAmount,
   decrementMintAmount,
   donationAmount,
-
   setDonationAmount,
 }) => {
   const { address } = useAccount();
@@ -119,7 +118,7 @@ const MintingWidget = ({
         <span className="text-sm text-zinc-500"> + GAS</span>
       </h4>
       <span className="text-md text-center my-2 text-zinc-900 font-Roboto">
-        Max Mint Amount Per Transaction is 2.
+        Max Mint Amount Per Transaction is 9.
       </span>
 
       <button
