@@ -63,22 +63,9 @@ export default function Home() {
                     Pakistan and Puerto Rico.
                   </p>
 
-                  {status ? (
-                    <MintingWidget
-                      incrementMintAmount={incrementMintAmount}
-                      mintAmount={mintAmount}
-                      decrementMintAmount={decrementMintAmount}
-                      donationAmount={donationAmount}
-                      setDonationAmount={setDonationAmount}
-                    />
-                  ) : null}
-                  {!status ? (
-                    <div className="flex my-5">
-                      <span className="font-Roboto text-2xl text-center text-zinc-900">
-                        Please connect your wallet!
-                      </span>
-                    </div>
-                  ) : null}
+                  <p className="mt-4 font-Roboto text-gray-600">
+                    Minting has ended! Thanks for those who participated.
+                  </p>
                 </div>
               </div>
             </div>
