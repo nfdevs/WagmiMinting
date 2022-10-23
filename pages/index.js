@@ -63,9 +63,19 @@ export default function Home() {
                     Pakistan and Puerto Rico.
                   </p>
 
-                  <p className="mt-4 font-Roboto text-gray-600">
-                    Minting has ended! Thanks to those who participated.
+                  <p className="mt-4 font-Roboto text-zinc-600">
+                    Thanks to those who donated to the cause! Find the
+                    collection on {""}
+                    <a
+                      href="https://opensea.io/collection/pkprcharitycollective"
+                      className="underline"
+                    >
+                      Opensea
+                    </a>
+                    .
                   </p>
+
+                  <p></p>
                 </div>
               </div>
             </div>
