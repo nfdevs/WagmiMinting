@@ -64,7 +64,7 @@ export default function Home() {
                   </p>
 
                   <p className="mt-4 font-Roboto text-gray-600">
-                    Minting has ended! Thanks for those who participated.
+                    Minting has ended! Thanks to those who participated.
                   </p>
                 </div>
               </div>
